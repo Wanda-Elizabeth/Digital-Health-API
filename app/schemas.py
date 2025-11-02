@@ -29,7 +29,7 @@ class Patient(PatientBase):
     id: int
 
     class Config:
-        orm_mode = True  # Pydantic v1
+        orm_mode = True
 
 
 # -----------------------
@@ -48,11 +48,11 @@ class EncounterUpdate(BaseModel):
     start: Optional[datetime] = None
     end: Optional[datetime] = None
     encounter_class: Optional[constr(max_length=64)] = None
-    patient_id: Optional[int] = None  # allow reassignment if needed
+    patient_id: Optional[int] = None
 
 class Encounter(EncounterBase):
     id: int
     patient_id: int
 
     class Config:
-        orm_mode = True  # Pydantic v1
+        orm_mode = True

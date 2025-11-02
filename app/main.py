@@ -5,10 +5,10 @@ from app.routes import patients_router, encounters_router
 
 app = FastAPI(title="Digital Health API", version="1.0")
 
-# Optional CORS for frontend access
+#  CORS for frontend access
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # tighten later
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

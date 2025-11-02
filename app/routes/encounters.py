@@ -22,12 +22,10 @@ def get_db():
 
 # NOTE: In main.py include with:
 # app.include_router(encounters_router, prefix="/api/encounters", tags=["encounters"])
-# so all paths below are relative (no extra "/encounters" here).
 
 # --- Create ---
 @router.post("", response_model=Encounter, status_code=status.HTTP_201_CREATED)
 def create_encounter(payload: EncounterCreate, db: Session = Depends(get_db)):
-    # Optional: ensure referenced patient exists if you want stricter integrity at API level.
     db_encounter = EncounterModel(**payload.dict(exclude_unset=True))
     db.add(db_encounter)
     db.commit()
@@ -42,7 +40,7 @@ def read_encounter(encounter_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Encounter not found")
     return enc
 
-# --- List / query (optional, helps day-2 usage) ---
+# --- List / query  ---
 @router.get("", response_model=List[Encounter])
 def list_encounters(
     patient_id: Optional[int] = None,
@@ -66,7 +64,7 @@ def list_encounters(
 @router.put("/{encounter_id}", response_model=Encounter)
 def update_encounter(
     encounter_id: int,
-    payload: EncounterUpdate,  # define with all fields optional
+    payload: EncounterUpdate,
     db: Session = Depends(get_db),
 ):
     enc = db.query(EncounterModel).filter(EncounterModel.id == encounter_id).first()

@@ -6,7 +6,7 @@ from typing import List, Optional
 from sqlalchemy import String, Integer, Date, DateTime, ForeignKey, Index
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.database import Base  # declarative_base() from your database.py
+from app.database import Base
 
 
 class Patient(Base):

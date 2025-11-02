@@ -21,12 +21,10 @@ def get_db():
 
 # NOTE: In main.py you should include this router as:
 # app.include_router(patients_router, prefix="/api/patients", tags=["patients"])
-# So all paths below are relative (no extra "/patients" here).
 
 # --- Create ---
 @router.post("", response_model=Patient, status_code=status.HTTP_201_CREATED)
 def create_patient(payload: PatientCreate, db: Session = Depends(get_db)):
-    # Optional: enforce unique identifier at API level (DB unique index is recommended too)
     if payload.identifier:
         existing = (
             db.query(PatientModel)
@@ -92,7 +90,7 @@ def search_patients(
 @router.put("/{patient_id}", response_model=Patient)
 def update_patient(
     patient_id: int,
-    payload: PatientUpdate,  # define fields as Optional[...] in PatientUpdate
+    payload: PatientUpdate,
     db: Session = Depends(get_db),
 ):
     patient = db.query(PatientModel).filter(PatientModel.id == patient_id).first()
